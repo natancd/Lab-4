@@ -122,6 +122,7 @@ Public Class frmCarInventory
                 txtPrice.Clear()
                 txtPrice.Focus()
                 outputMessage += "The price of the car must be a real number and must be higher than " & MINIMUM_PRICE & "."
+                returnValue = False
             End If
         End If
 
@@ -164,7 +165,7 @@ Public Class frmCarInventory
         cmbYear.Text = car.Year
         chkNew.Checked = car.cNew
 
-        lblResult.Text = car.GetSalutation()
+        lblResult.Text = car.GetCar()
 
     End Sub
 

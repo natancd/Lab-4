@@ -121,9 +121,9 @@ Public Class Car
 
     End Property
 
-    ' GetSalutation is a function that a salutation based on the private properties within the class scope
-    Public Function GetSalutation() As String
-        Return "The selected car is a " & carYear & " " & carMake & " " & carModel & ", and its price is $" & carPrice.ToString("C") & ". " & IIf(carNew = True, "It is a new car", "It is not a new car").ToString()
+    ' GetCar is a function that describes the selected car based on the private properties within the class scope
+    Public Function GetCar() As String
+        Return "The selected car is a " & carYear & " " & carMake & " " & carModel & ", and its price is " & carPrice.ToString("C") & ". " & IIf(carNew = True, "It is a new car", "It is not a new car").ToString()
     End Function
 
 End Class
