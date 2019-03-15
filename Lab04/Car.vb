@@ -1,6 +1,6 @@
 ﻿' **************************************************************************************************************************************************/
-' * Lab 3: Car Inventory
-' * Program: Lab03                                      
+' * Lab 4: Car Inventory
+' * Program: Lab04                                    
 ' * Course: NET DEVELOPMENT I (NETD-2202)                                                                 
 ' * Author:      Natan Colavite Dellagiustina  - 100722419                                    
 ' * Date:        March 15th, 2019 
@@ -19,7 +19,7 @@ Public Class Car
     Private currentCar As Integer = 0           ' Private variable to hold the car's identification number
     Private carMake As String = String.Empty    ' Private variable to hold the car's make
     Private carModel As String = String.Empty   ' Private variable to hold the car's model
-    Private carYear As Integer = 0              ' Private variable to hold the car's year
+    Private carYear As String = String.Empty            ' Private variable to hold the car's year
     Private carPrice As Double = 0.0            ' Private variable to hold the car's price
     Private carNew As Boolean = False           ' Private variable to hold the car's status
 
@@ -32,7 +32,7 @@ Public Class Car
     End Sub
 
     ' Constructor - Parameterized - creates a new car object
-    Public Sub New(make As String, model As String, year As Integer, price As Double, cNew As Boolean)
+    Public Sub New(make As String, model As String, year As String, price As Double, cNew As Boolean)
 
         Me.New()
         carMake = make      ' Set the car make
@@ -61,18 +61,6 @@ Public Class Car
 
     End Property
 
-    ' New Property - Gets and Sets the new status of a car
-    Public Property cNew() As Boolean
-
-        Get
-            Return carNew
-        End Get
-        Set(ByVal value As Boolean)
-            carNew = value
-        End Set
-
-    End Property
-
     ' Make property - Gets and Sets the make of a car
     Public Property Make() As String
 
@@ -98,12 +86,12 @@ Public Class Car
     End Property
 
     ' Year property - Gets and Sets the year of a car
-    Public Property Year() As Integer
+    Public Property Year() As String
 
         Get
-            Return CInt(carYear)
+            Return carYear
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As String)
             carYear = value
         End Set
 
@@ -121,9 +109,21 @@ Public Class Car
 
     End Property
 
+    ' New Property - Gets and Sets the new status of a car
+    Public Property cNew() As Boolean
+
+        Get
+            Return carNew
+        End Get
+        Set(ByVal value As Boolean)
+            carNew = value
+        End Set
+
+    End Property
+
     ' GetSalutation is a function that a salutation based on the private properties within the class scope
     Public Function GetSalutation() As String
-        Return "The selected car is a " & carYear & " " & carMake & " " & carModel & ", and its price is $" & carPrice & ". " & IIf(carNew = True, "It is a new car", "It is not a new car").ToString()
+        Return "The selected car is a " & carYear & " " & carMake & " " & carModel & ", and its price is $" & carPrice.ToString("C") & ". " & IIf(carNew = True, "It is a new car", "It is not a new car").ToString()
     End Function
 
 End Class

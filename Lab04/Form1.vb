@@ -1,6 +1,6 @@
 ﻿' **************************************************************************************************************************************************/
-' * Lab 3: Car Inventory
-' * Program: Lab03                                      
+' * Lab 4: Car Inventory
+' * Program: Lab0                          
 ' * Course: NET DEVELOPMENT I (NETD-2202)                                                                 
 ' * Author:      Natan Colavite Dellagiustina  - 100722419                                    
 ' * Date:        March 15th, 2019 
@@ -14,6 +14,7 @@
 
 Option Strict On
 Public Class frmCarInventory
+    Const MINIMUM_PRICE As Double = 0.0
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         ' Close the form
         Me.Close()
@@ -35,14 +36,14 @@ Public Class frmCarInventory
 
             ' In case the validation passed, it will create a new object using the constructor and add it to the list
             If currentCar.Trim.Length = 0 Then
-                car = New Car(cmbMake.Text, txtModel.Text, CInt(cmbYear.Text), CInt(txtPrice.Text), chkNew.Checked)
+                car = New Car(cmbMake.Text, txtModel.Text, cmbYear.Text, CDbl(txtPrice.Text), chkNew.Checked)
                 carList.Add(car.IdentificationNumber.ToString(), car)
             Else
                 ' In case the user selected something from the list, it will update it according to the new selection
                 car = CType(carList.Item(currentCar), Car)
                 car.Make = cmbMake.Text
                 car.Model = txtModel.Text
-                car.Year = CInt(cmbYear.Text)
+                car.Year = cmbYear.Text
                 car.Price = CDbl(txtPrice.Text)
                 car.cNew = chkNew.Checked
             End If
@@ -59,7 +60,7 @@ Public Class frmCarInventory
                 carItem.SubItems.Add(car.IdentificationNumber.ToString())
                 carItem.SubItems.Add(car.Make)
                 carItem.SubItems.Add(car.Model)
-                carItem.SubItems.Add(car.Year.ToString())
+                carItem.SubItems.Add(car.Year)
                 carItem.SubItems.Add(car.Price.ToString("C"))
                 ' Add the items to the listview
                 lvwCars.Items.Add(carItem)
@@ -74,11 +75,11 @@ Public Class frmCarInventory
 
     Private Sub Reset()
         ' Reset function
+        cmbMake.SelectedIndex = -1
         txtModel.Text = String.Empty
+        cmbYear.SelectedIndex = -1
         txtPrice.Text = String.Empty
         chkNew.Checked = False
-        cmbMake.SelectedIndex = -1
-        cmbYear.SelectedIndex = -1
         lblResult.Text = String.Empty
         currentCar = String.Empty
 
@@ -86,6 +87,7 @@ Public Class frmCarInventory
     ' IsValidInput Function - validates the data in each control to ensure that the user has entered appropriate values
     Private Function IsValidInput() As Boolean
 
+        Dim priceIsRight As Double
         Dim returnValue As Boolean = True
         Dim outputMessage As String = String.Empty
         ' check if the make has been selected
@@ -105,7 +107,7 @@ Public Class frmCarInventory
         ' check if the year has been selected
         If cmbYear.SelectedIndex = -1 Then
             ' If not set the error message and set the return value to false
-            outputMessage += "Please select the car's Year." & vbCrLf
+            outputMessage += "Please select the car's year." & vbCrLf
             returnValue = False
 
         End If
@@ -114,8 +116,15 @@ Public Class frmCarInventory
             ' If not set the error message and set the return value to false
             outputMessage += "Please enter the price of the car." & vbCrLf
             returnValue = False
-
+        Else
+            ' Check if the number is actually a number and it is higher than zero
+            If (Double.TryParse(txtPrice.Text.Trim, priceIsRight) = False OrElse priceIsRight < MINIMUM_PRICE) Then
+                txtPrice.Clear()
+                txtPrice.Focus()
+                outputMessage += "The price of the car must be a real number and must be higher than " & MINIMUM_PRICE & "."
+            End If
         End If
+
         ' If else to check if there's any false return (or error)
         If returnValue = False Then
 
@@ -152,7 +161,7 @@ Public Class frmCarInventory
         cmbMake.Text = car.Make
         txtModel.Text = car.Model
         txtPrice.Text = CType(car.Price, String)
-        cmbYear.Text = CType(car.Year, String)
+        cmbYear.Text = car.Year
         chkNew.Checked = car.cNew
 
         lblResult.Text = car.GetSalutation()

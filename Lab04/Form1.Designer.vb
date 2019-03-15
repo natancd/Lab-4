@@ -240,6 +240,9 @@ Partial Class frmCarInventory
         Me.Controls.Add(Me.cmbMake)
         Me.Controls.Add(Me.txtPrice)
         Me.Controls.Add(Me.txtModel)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmCarInventory"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Car Inventory"
